@@ -32,9 +32,9 @@ public final class Provider {
     }
 
     @discardableResult
-    public func intercept(action: @escaping (Request, (Request) async throws -> Response) async throws -> Response) -> Self {
+	public func intercept(action: @Sendable @escaping (Request, (Request) async throws -> Response) async throws -> Response) -> Self {
         struct AnonymousInterceptor: Interceptor {
-            let action: (Request, Interceptor.Next) async throws -> Response
+            let action: @Sendable (Request, Interceptor.Next) async throws -> Response
 
             func intercept(req: Request, next: Interceptor.Next) async throws -> Response {
                 try await action(req, next)
@@ -68,7 +68,7 @@ public final class Provider {
     }
 }
 
-public protocol Interceptor {
+public protocol Interceptor: Sendable {
     typealias Next = (Request) async throws -> Response
     func intercept(req: Request, next: Next) async throws -> Response
 }
@@ -80,7 +80,7 @@ public protocol RequestModifier {
 // MARK: Closure Based APIs
 
 extension Provider {
-    public func request(_ builder: inout RequestBuilder, completionHandler: @escaping (Response) -> Void) {
+    public func request(_ builder: inout RequestBuilder, completionHandler: @Sendable @escaping (Response) -> Void) {
         do {
             let request = try createRequest(&builder)
             var next = http.request
@@ -100,14 +100,14 @@ extension Provider {
 
 extension Interceptor {
     fileprivate func intercept(req: Request,
-                               completionHandler: @escaping (Response) -> Void,
-                               next: @escaping (Request, @escaping (Response) -> Void) -> Void) {
+                               completionHandler: @Sendable @escaping (Response) -> Void,
+                               next: @Sendable @escaping (Request, @Sendable @escaping (Response) -> Void) -> Void) {
         Task {
             do {
                 completionHandler(
                     try await intercept(req: req) { req in
-                        return try await withCheckedThrowingContinuation {
-                            next(req, $0.resume)
+                        return try await withCheckedThrowingContinuation { c in
+							next(req, { x in c.resume(returning: x) })
                         }
                     }
                 )

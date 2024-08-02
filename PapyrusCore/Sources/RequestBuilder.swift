@@ -73,9 +73,9 @@ public struct RequestBuilder {
         case multipart([ContentKey: Part])
     }
 
-    public static var defaultQueryEncoder: URLEncodedFormEncoder = URLEncodedFormEncoder()
-    public static var defaultRequestEncoder: RequestEncoder = JSONEncoder()
-    public static var defaultResponseDecoder: ResponseDecoder = JSONDecoder()
+    public static let defaultQueryEncoder: URLEncodedFormEncoder = URLEncodedFormEncoder()
+    public static let defaultRequestEncoder: RequestEncoder = JSONEncoder()
+    public static let defaultResponseDecoder: ResponseDecoder = JSONDecoder()
 
     // MARK: Data
 

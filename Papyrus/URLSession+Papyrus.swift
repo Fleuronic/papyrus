@@ -15,7 +15,7 @@ extension Provider {
 
 // MARK: `HTTPService` Conformance
 
-extension URLSession: HTTPService {
+extension URLSession: @retroactive HTTPService {
     public func build(method: String, url: URL, headers: [String: String], body: Data?) -> Request {
         var request = URLRequest(url: url)
         request.httpMethod = method
@@ -40,7 +40,7 @@ extension URLSession: HTTPService {
 #endif
     }
 
-    public func request(_ req: Request, completionHandler: @escaping (Response) -> Void) {
+    public func request(_ req: Request, completionHandler: @Sendable @escaping (Response) -> Void) {
         let urlRequest = req.urlRequest
         dataTask(with: urlRequest) {
             completionHandler(_Response(request: urlRequest, response: $1, error: $2, body: $0))
@@ -95,7 +95,7 @@ extension Request {
     }
 }
 
-extension URLRequest: Request {
+extension URLRequest: @retroactive Request {
     public var body: Data? {
         get { httpBody }
         set { httpBody = newValue }

@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol ResponseDecoder: KeyMappable {
+public protocol ResponseDecoder: KeyMappable, Sendable {
     func decode<D: Decodable>(_ type: D.Type, from: Data) throws -> D
 }
 

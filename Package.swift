@@ -1,4 +1,4 @@
-// swift-tools-version:5.9
+// swift-tools-version:6.0
 import CompilerPluginSupport
 import PackageDescription
 
@@ -6,7 +6,7 @@ let package = Package(
     name: "papyrus",
     platforms: [
         .iOS("13.0"),
-        .macOS("10.15"),
+        .macOS("13.0"),
         .tvOS("13.0")
     ],
     products: [
@@ -75,5 +75,6 @@ let package = Package(
             ],
             path: "PapyrusPlugin/Tests"
         ),
-    ]
+    ],
+	swiftLanguageVersions: [.v6]
 )

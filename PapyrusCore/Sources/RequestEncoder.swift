@@ -1,6 +1,6 @@
 import Foundation
 
-public protocol RequestEncoder: KeyMappable {
+public protocol RequestEncoder: KeyMappable, Sendable {
     var contentType: String { get }
     func encode<E: Encodable>(_ value: E) throws -> Data
 }

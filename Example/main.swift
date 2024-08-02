@@ -22,7 +22,7 @@ protocol Sample {
     func upload(id: Int, part1: Part, part2: Part) async throws
 }
 
-public struct Todo: Codable {
+public struct Todo: Codable, Sendable {
     let id: Int
     let name: String
 }
