@@ -6,7 +6,7 @@ let package = Package(
     name: "papyrus",
     platforms: [
         .iOS("13.0"),
-        .macOS("13.0"),
+        .macOS("12.0"),
         .tvOS("13.0")
     ],
     products: [
