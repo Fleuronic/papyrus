@@ -15,7 +15,7 @@ let package = Package(
         .library(name: "PapyrusCore", targets: ["PapyrusCore"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-syntax", from: "510.0.0"),
+        .package(url: "https://github.com/swiftlang/swift-syntax", from: "510.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-macro-testing", from: "0.1.0"),
     ],
     targets: [
