@@ -284,3 +284,9 @@ extension String {
         return kebabCase
     }
 }
+
+#if compiler(<6.0)
+extension JSONEncoder: @unchecked Sendable {}
+#else
+extension JSONEncoder: @retroactive @unchecked Sendable {}
+#endif

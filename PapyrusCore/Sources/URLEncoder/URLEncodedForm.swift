@@ -46,11 +46,20 @@ internal enum URLEncodedForm {
     /// ASCII characters that will not be percent encoded in URL encoded form data
     static let unreservedCharacters = CharacterSet(charactersIn: "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_.~")
 
+	#if compiler(<6.0)
     @available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
     /// ISO8601 data formatter used throughout URL encoded form code
-	nonisolated(unsafe) static var iso8601Formatter: ISO8601DateFormatter = {
+	static var iso8601Formatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = .withInternetDateTime
         return formatter
     }()
+	#else
+	@available(macOS 10.12, iOS 10.0, watchOS 3.0, tvOS 10.0, *)
+	nonisolated(unsafe) static var iso8601Formatter: ISO8601DateFormatter = {
+		let formatter = ISO8601DateFormatter()
+		formatter.formatOptions = .withInternetDateTime
+		return formatter
+	}()
+	#endif
 }

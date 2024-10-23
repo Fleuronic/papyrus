@@ -30,3 +30,9 @@ extension JSONDecoder: ResponseDecoder {
         return new as! Self
     }
 }
+
+#if compiler(<6.0)
+extension JSONDecoder: @unchecked Sendable {}
+#else
+extension JSONDecoder: @retroactive @unchecked Sendable {}
+#endif
