@@ -5,9 +5,10 @@ import PackageDescription
 let package = Package(
     name: "papyrus",
     platforms: [
-        .iOS("13.0"),
-        .macOS("12.0"),
-        .tvOS("13.0")
+		.iOS(.v13),
+		.macOS(.v10_15),
+		.tvOS(.v13),
+		.watchOS(.v6)
     ],
     products: [
         .executable(name: "Example", targets: ["Example"]),
